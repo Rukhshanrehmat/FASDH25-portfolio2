@@ -4,7 +4,7 @@ import pandas as pd
 import plotly.express as px
 
 # write a code to load data
-counts = pd.read_csv("../Scripts/ner_counts.tsv", sep="\t")
+counts = pd.read_csv("../Data/Output/ner_counts.tsv", sep="\t")
 coords = pd.read_csv("../Scripts/NER_gazetteer.tsv", sep="\t")
 
 # Rename 'Place' to match 'placename'
@@ -18,15 +18,14 @@ data["Count"] = pd.to_numeric(data["Count"], errors="coerce")
 data = data.dropna(subset=["Count", "latitude", "longitude"])
 
 # Plot map
-fig = px.scatter_geo(
+fig = px.scatter_map(
     data,
+    hover_name="placename",
     lat="latitude",
     lon="longitude",
-    hover_name="placename",
     size="Count",
     color="Count",
-    title="NER-Extracted Place Names (Jan 2024)",
-    projection="natural earth"
+    title="NER-Extracted Place Names (Jan 2024)",    
 )
 
 # write a code to save outputs

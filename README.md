@@ -180,9 +180,11 @@ Disadvantages:
 
 ## Final Map Outputs
 ### Regex Map
-![image](C:\Users\JMS\Downloads\FASDH25-portfolio2\Data\Output)
+![Regex Map](./data/output/regex_map.png)
+
 ### NER Map
-![image](C:\Users\JMS\Downloads\FASDH25-portfolio2\Data\Output)
+![NER Map](./data/output/NER_map.png)
+
 
 ## Comparison of January 2024 Maps (Regex vs. NER)
 There are two key differences between the maps generated from the regex and NER methods:
@@ -190,6 +192,14 @@ There are two key differences between the maps generated from the regex and NER 
 1. In the NER map, the locations are spread across the globe, including places outside Gaza. In contrast, the regex map is strictly limited to locations within Gaza, based on the curated gazetteer.
 
 2. The counts for many places in the NER map are higher than those in the regex map. For example, the frequency of (Gaza) in the NER map is significantly higher than in the regex map. This may be due to the NER model identifying more variations or contexts of the place name that the regex method did not capture.
+
+## Self Analysis
+1. Weakness:
+One of the main challenges in the project was handling the inconsistency in place names, especially with the NER method. The NER approach resulted in many duplicate or slightly different forms of the same place, which were treated as separate entries (for example, "Jabalia" and "Jabaliya"). Merging all these variations manually within the limited timeframe was not possible, which led to inflated or fragmented counts. Additionally, many places identified by NER had no coordinates available through automated geocoding services like GeoNames. We attempted to manually look up missing coordinates for several entries (e.g., Africa4Palestine, Jawwal, Pashias, Qffd, Almawasi, Alarouri, Alahli, etc.), but found that some were not real geographic locations—rather, they were names of organizations, people, or unclear terms. In the regex approach, another issue was inconsistency in results across different group members, possibly caused by small differences in regex implementation, encoding, or input file handling. This made it difficult to fully align outputs for comparison and verification.
+
+2. Improvements:
+If we had more time, several improvements could significantly enhance the quality of the results. First, we would invest more effort in cleaning and normalizing the NER output, possibly using fuzzy matching, gazetteer linking, or clustering techniques to merge near-duplicate place names. Second, we would automate and improve the geocoding process by integrating fallback services or using contextual filtering to exclude non-geographic entities before assigning coordinates. For the regex method, creating a shared, tested preprocessing script would ensure consistency in outputs across environments. We would also expand the gazetteer with more variant spellings and transliterations to capture place names that were missed. Finally, additional qualitative analysis—such as classifying mentions by article tone or event context—would make the maps more informative and analytically rich.
+
 
 
 
